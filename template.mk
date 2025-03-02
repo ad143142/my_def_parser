@@ -20,6 +20,7 @@ ifeq ($(OS_TYPE),SunOS)
 endif
 
 ifeq ($(OS_TYPE),Linux)
+    CXXFLAGS=-g -Wall
     ARCH=lnx86 
     CXX=g++
     CC=gcc

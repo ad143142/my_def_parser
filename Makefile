@@ -14,9 +14,7 @@ BUILD_ORDER	= \
 			cdef \
 			cdefzlib \
 			defzlib \
-			defrw \
-			defwrite \
-			defdiff
+			my_work
 
 ## HP-UX 9.0.X
 OS_TYPE := $(shell uname)

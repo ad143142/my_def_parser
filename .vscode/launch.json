@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+
+        {
+            "name": "make debug", //I named it Pusk because i can 
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/my_work/main", //path to your programs exe and exe name
+            // "args": ["-o", "/home/bywang/DEF-Parser/defrw/one_nor.def", "/home/bywang/DEF-Parser/TEST/one_nor.def"], //arguments to pass to the program
+            // "args": ["-o", "/home/bywang/DEF-Parser/defrw/complete.5.8.def", "/home/bywang/DEF-Parser/TEST/complete.5.8.def"], //arguments to pass to the program
+            "args": ["-o", "/home/bywang/DEF-Parser/TEST/output/route.def", "/home/bywang/DEF-Parser/TEST/route.def"], //arguments to pass to the program
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
