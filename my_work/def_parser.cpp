@@ -171,7 +171,7 @@ int netf(defrCallbackType_e c, defiNet *net, defiUserData ud) {
                 int num_points = 0;
                 bool connect_via = false;
                 std::string layer;
-                int width = 0;
+                // int width = 0;
                 point_t p1, p2; // p1 is left bottom, p2 is right top
                 while ((path = (int)p->next()) != DEFIPATH_DONE) {
                     switch (path) {
@@ -194,19 +194,21 @@ int netf(defrCallbackType_e c, defiNet *net, defiUserData ud) {
 
                             break;
                         }
-                        case DEFIPATH_WIDTH:
-                            // fprintf(stdout, "%d ", p->getWidth());
-                            width = p->getWidth();
-                            break;
+                        // case DEFIPATH_WIDTH:
+                        //     // fprintf(stdout, "%d ", p->getWidth());
+                        //     width = p->getWidth();
+                        //     break;
                         case DEFIPATH_POINT:
                             p->getPoint(&x, &y);
                             if (num_points == 0) {
                                 // for the left bottom point
-                                bg::assign_values(p1, x - width, y - width);
+                                // bg::assign_values(p1, x - width, y - width);
+                                bg::assign_values(p1, x, y);
                             }
                             else if (num_points == 1) {
                                 // for the right top point
-                                bg::assign_values(p2, x + width, y + width);
+                                // bg::assign_values(p2, x + width, y + width);
+                                bg::assign_values(p2, x, y);
                             }
                             else {
                                 fprintf(stdout, "ERROR: more than 2 points in a path\n");
@@ -223,11 +225,13 @@ int netf(defrCallbackType_e c, defiNet *net, defiUserData ud) {
                             else {
                                 if (num_points == 0) {
                                     // for the left bottom point
-                                    bg::assign_values(p1, x - width, y - width);
+                                    // bg::assign_values(p1, x - width, y - width);
+                                    bg::assign_values(p1, x, y);
                                 }
                                 else if (num_points == 1) {
                                     // for the right top point
-                                    bg::assign_values(p2, x + width, y + width);
+                                    // bg::assign_values(p2, x + width, y + width);
+                                    bg::assign_values(p2, x, y);
                                 }
                                 else {
                                     fprintf(stdout, "ERROR: more than 2 points in a path\n");
@@ -248,8 +252,7 @@ int netf(defrCallbackType_e c, defiNet *net, defiUserData ud) {
                 // only metal need to be considered
                 // the box of the via is include in the box of the metal
                 if (connect_via == 0) {
-                    box_t tmp_box(p1, p2);
-                    def_info_ptr->add_box(layer, tmp_box);
+                    def_info_ptr->add_box(layer, p1, p2);
                 }
             }
         }
@@ -343,8 +346,7 @@ int snetpath(defrCallbackType_e c, defiNet *ppath, defiUserData ud) {
                 // only metal need to be considered
                 // the box of the via is include in the box of the metal
                 if (connect_via == 0) {
-                    box_t tmp_box(p1, p2);
-                    def_info_ptr->add_box(layer, tmp_box);
+                    def_info_ptr->add_box(layer, p1, p2);
                 }
             }
         }
@@ -425,8 +427,7 @@ int snetwire(defrCallbackType_e c, defiNet *ppath, defiUserData ud) {
                 // only metal need to be considered
                 // the box of the via is include in the box of the metal
                 if (connect_via == 0) {
-                    box_t tmp_box(p1, p2);
-                    def_info_ptr->add_box(layer, tmp_box);
+                    def_info_ptr->add_box(layer, p1, p2);
                 }
             }
         }
@@ -511,8 +512,7 @@ int snetf(defrCallbackType_e c, defiNet *net, defiUserData ud) {
                 // only metal need to be considered
                 // the box of the via is include in the box of the metal
                 if (connect_via == 0) {
-                    box_t tmp_box(p1, p2);
-                    def_info_ptr->add_box(layer, tmp_box);
+                    def_info_ptr->add_box(layer, p1, p2);
                 }
             }
         }
@@ -649,7 +649,7 @@ int def_parser(int argc, char **argv, def_info_t &def_info) {
     // snetpath會一次讀1000行
     // snetwire會把最後一輪不到1000行的讀完
     // snetf總結所有的path
-    defrSetSNetPartialPathCbk(snetpath);///////////////////////FIXME://////////////////////////////////////////////// 
+    defrSetSNetPartialPathCbk(snetpath); ///////////////////////FIXME:////////////////////////////////////////////////
     defrSetSNetWireCbk(snetwire);
     defrSetSNetCbk(snetf);
 
